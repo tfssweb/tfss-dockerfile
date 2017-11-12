@@ -3,3 +3,13 @@
 `/docker-entrypoint-initdb.d/`：将sql文件放到此目录下，可以自动进行执行；<br/>
 
 `/etc/mysql/conf.d/`：此路径下可以添加自己的配置文件，可以减少`run`的时候添加那么多的参数。
+
+构建镜像，执行：
+```
+docker build -t tfss_mysql .
+```
+
+启动镜像，执行：
+```
+docker run -d -p 3306:3306 --name mysql tfss_mysql
+```
