@@ -9,7 +9,7 @@
 docker build -t tfss_mysql .
 ```
 
-启动镜像，执行：
+启动容器，执行：
 ```
 docker run -d -p 3306:3306 --name mysql tfss_mysql
 ```
