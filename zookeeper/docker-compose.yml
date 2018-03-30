@@ -1,0 +1,56 @@
+version: '2'
+services:
+    zookeeper01:
+        container_name: zookeeper01
+        image: lhs/zookeeper
+        build:
+            context: .
+            dockerfile: Dockerfile.zookeeper
+        ports:
+            - 2181/tcp
+            - 2888/tcp
+            - 3888/tcp
+        environment:
+            - ZOOKEEPER_ID=1
+            - ZOOKEEPER_CLUSTER=server.1=zookeeper01:2888:3888,server.2=zookeeper02:2888:3888,server.3=zookeeper03:2888:3888
+        networks:
+            zookeeper:
+                aliases:
+                    - zookeeper01
+    zookeeper02:
+        container_name: zookeeper02
+        image: lhs/zookeeper
+        build:
+            context: .
+            dockerfile: Dockerfile.zookeeper
+        ports:
+            - 2181/tcp
+            - 2888/tcp
+            - 3888/tcp
+        environment:
+            - ZOOKEEPER_ID=2
+            - ZOOKEEPER_CLUSTER=server.1=zookeeper01:2888:3888,server.2=zookeeper02:2888:3888,server.3=zookeeper03:2888:3888
+        networks:
+            zookeeper:
+                aliases:
+                    - zookeeper02
+    zookeeper03:
+        container_name: zookeeper03
+        image: lhs/zookeeper
+        build:
+            context: .
+            dockerfile: Dockerfile.zookeeper
+        ports:
+            - 2181/tcp
+            - 2888/tcp
+            - 3888/tcp
+        environment:
+            - ZOOKEEPER_ID=3
+            - ZOOKEEPER_CLUSTER=server.1=zookeeper01:2888:3888,server.2=zookeeper02:2888:3888,server.3=zookeeper03:2888:3888
+        networks:
+            zookeeper:
+                aliases:
+                    - zookeeper03
+networks:
+    zookeeper:
+        external: true
