@@ -9,7 +9,7 @@ services:
         environment:
             TZ: 'Asia/Shanghai'
         ports:
-            - "9000:9000"
+            - "9000:80"
         volumes:
             - /opt/tfss_volumes/tale.db:/tale/resources/tale.db
             - /opt/tfss_volumes/upload:/tale/resources/upload
