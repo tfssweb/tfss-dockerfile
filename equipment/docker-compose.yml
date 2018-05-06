@@ -1,0 +1,32 @@
+version: '2'
+services:
+    mysql:
+        container_name: mysql
+        image: "mysql:${IMAGE_VERSION}"
+        build:
+            context: .
+            dockerfile: Dockerfile.mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - mynet
+        environment:
+            TZ: 'Asia/Shanghai'
+            MYSQL_ROOT_PASSWORD: root
+        command: ['mysqld','--character-set-server=utf8']
+
+    apache:
+        container_name: web
+        image: "tomcat:${IMAGE_VERSION}"
+        build:
+            context: .
+            dockerfile: Dockerfile.apache
+        ports:
+            - "8080:8080"
+        networks:
+            - mynet
+        depends_on:
+            - mysql
+
+networks:
+    mynet:
