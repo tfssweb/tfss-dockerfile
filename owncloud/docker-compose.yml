@@ -1,0 +1,36 @@
+version: '2'
+services:
+    mysql:
+        container_name: mysql
+        image: "mysql_v1"
+        build:
+            context: .
+            dockerfile: Dockerfile.mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - mynet
+        environment:
+            TZ: 'Asia/Shanghai'
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - /opt/owncloud/mysql:/var/lib/mysql
+        command: ['mysqld','--character-set-server=utf8']
+
+    owncloud:
+        container_name: owncloud
+        image: "owncloud_v1"
+        build:
+            context: .
+            dockerfile: Dockerfile.owncloud
+        ports:
+            - "8090:80"
+        networks:
+            - mynet
+        volumes:
+            - /opt/owncloud/data:/var/www/html/data
+        depends_on:
+            - mysql
+
+networks:
+    mynet:
