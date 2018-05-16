@@ -1,0 +1,40 @@
+#!/bin/bash
+function StandardOutput() {
+    echo -e "\033[32m$1\033[0m"
+}
+function ErrorOutput() {
+    echo -e "\033[31m$1!!!\033[0m"
+}
+function add() {
+    read -p "Please input username: " USERNAME
+    cat ${NGROK_CONFIG}/secret | awk '{print $1}' | grep -E "^${USERNAME}$" &> /dev/null
+    if [ $? == 0 ];then
+        ErrorOutput ("User already exist.")
+    else
+        read -p "Please input password: " PASSWORD
+        echo "${USERNAME} ${PASSWORD}" >> ${NGROK_CONFIG}/secret
+        StandardOutput("User add success.")
+    fi
+}
+
+function del() {
+    StandardOutput("Please input number of username: ")
+    cat -n ${NGROK_CONFIG}/secret | awk '{print $1" "$2}'
+    read NUMBER
+    USERNAME=$(sed -n "${NUMBER}p" ${NGROK_CONFIG}/secret | awk '{print $1}')
+    read -p "You where del the ${USERNAME} (y/n): " ANSWER
+    if [ $(echo ${ANSWER} | tr [A-X] [a-z]) == "y" ];then
+        sed -i "${NUMBER}d" ${NGROK_CONFIG}/secret
+        StandardOutput("User del success.")
+    fi
+}
+
+function mod() {
+    StandardOutput("Please input number of username: ")
+    cat -n ${NGROK_CONFIG}/secret | awk '{print $1" "$2}'
+    read NUMBER
+    USERNAME=$(sed -n "${NUMBER}p" ${NGROK_CONFIG}/secret | awk '{print $1}')
+    read -p "Please input the new password for ${USERNAME}" PASSWORD
+    sed -i "s/${USERNAME}.*/${USERNAME} ${PASSWORD}/g" ${NGROK_CONFIG}/secret
+}
+$1

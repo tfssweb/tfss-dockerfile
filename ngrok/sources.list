@@ -1,0 +1,2 @@
+deb http://mirrors.tuna.tsinghua.edu.cn/debian/ jessie main non-free contrib
+deb http://mirrors.tuna.tsinghua.edu.cn/debian/ jessie-proposed-updates main non-free contrib

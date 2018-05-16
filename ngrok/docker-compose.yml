@@ -1,0 +1,25 @@
+version: '2'
+services:
+    ngrok:
+        container_name: ngrok
+        image: tfss_ngrok
+        build:
+           context: .
+           dockerfile: Dockerfile.ngrok
+        networks:
+            ngrok:
+                aliases:
+                    - ngrok
+        ports:
+            - 80:80/tcp
+            - 443:443/tcp
+            - 4443:4443/tcp
+            - 3000-3010:3000-3010/tcp
+        environment:
+            - NGROK_DOMAIN=example.com
+        volumes:
+            - /etc/ngrok:/etc/ngrok
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+networks:
+    ngrok:
+        external: true
