@@ -7,11 +7,11 @@
 
 # 简介：
 
-> :whale:tfss-dockerfile是日常使用的一些Dockerfile的汇总项目。 开源地址：https://github.com/tfssweb/tfss-dockerfile
+> Tfss-Dockerfile是日常使用的一些Dockerfile的汇总项目。 开源地址：https://github.com/tfssweb/tfss-dockerfile
 
 > 开发作者：[颓废书生](https://tfssweb.github.io/)
 
-> 此仓库存的是一些自己整理或收集的一些Dockerfile 案例，你可以`Fork`到您的仓库进行备份，因收集整理不易，还望给笔者一个`Star`哦！
+> :whale:此仓库存的是一些自己整理或收集的一些Dockerfile 案例，你可以`Fork`到您的仓库进行备份，因收集整理不易，还望给笔者一个`Star`哦！
 
 
 # 技术栈
@@ -24,12 +24,12 @@
 ## 相关链接：
 
 - [个人博客](https://tfssweb.github.io/)
-- [我的Github链接](https://github.com/tfssweb/)
+- [Github链接](https://github.com/tfssweb/)
 
 
 ## 公众号
 
 > 微信搜索：颓废书生
 
-> 公众号分享技术文章、毕业设计等相关内容
+> 公众号分享技术文章、毕业设计等相关内容。
 
