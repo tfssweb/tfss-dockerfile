@@ -1,0 +1,4 @@
+book/*
+*.un~
+require_module
+.idea/

@@ -1,0 +1,18 @@
+version: "3"
+services:
+  gitbook_wiki:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: gitbook
+    hostname: gitbook
+    restart: always
+    ports:
+      - "4000:4000"
+      - "4001:4001"
+      - "35729:35729"
+    volumes:
+      - .:/gitbook
+    environment:
+      BOOK_URL: https://github.com/tfssweb/display
+    command: ['/gitbook/start.sh']
