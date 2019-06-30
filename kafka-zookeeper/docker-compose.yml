@@ -1,0 +1,39 @@
+version: '2'
+services:
+  zookeeper:
+    container_name: kafka_zookeeper
+    image: zookeeper:latest
+    ports:
+      - "2181:2181"
+    environment:
+        TZ: 'Asia/Shanghai'
+        ZOO_MY_ID: 1
+        ZOO_PORT: 2181
+        ZOO_SERVERS: server.1=zookeeper:2888:3888
+#    volumes:
+#      - ./data/zookeeper/data:/data
+#      - ./data/zookeeper/datalog:/datalog
+  kafka:
+    container_name: kafka_kafka
+#    image: wurstmeister/kafka
+    image: kafka_kafka:v1
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+      - "9092:9092"
+    environment:
+      TZ: 'Asia/Shanghai'
+      KAFKA_ADVERTISED_HOST_NAME: xxx.xxx.xxx.xxx
+      KAFKA_CREATE_TOPICS: "test1:1:1,test2:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_LOG_DIRS: /kafka/kafka-logs
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data/kafka/kafka:/kafka
+      - ./data/kafka/data:/var/lib/kafka/data
+      - ./data/kafka/logs:/opt/kafka_2.12-2.1.0/logs
