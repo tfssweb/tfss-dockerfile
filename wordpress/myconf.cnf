@@ -1,0 +1,5 @@
+[client]
+max_allowed_packet=6M
+
+[mysqld]
+max_allowed_packet=6M

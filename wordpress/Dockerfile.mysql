@@ -1,0 +1,8 @@
+FROM mysql:5.7
+ENV TZ=Asia/Shanghai
+COPY ./myconf.cnf /etc/mysql/conf.d/
+
+#数据迁移的时候，可以先导出sql文件，将文件放到当前目录，然后将下面命令放开即可
+#CREATE DATABASE db_hstackcms default character set utf8 collate utf8_general_ci;
+#use db_hstackcms
+#COPY ./hstackcms.sql /docker-entrypoint-initdb.d/

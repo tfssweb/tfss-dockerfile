@@ -1,8 +1,10 @@
-version: '3.4'
+version: '2.0'
 services:
     nginx:
         image: nginx:1.13.6-alpine
         hostname: nginx
+        privileged: true
+        restart: always
         ports:
             - 80:80/tcp
         networks:
@@ -11,7 +13,7 @@ services:
                     - nginx
         volumes:
             - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-            - ./www:/var/www/html:rw
+            - ./volumedata/www:/var/www/html:rw
             - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
         logging:
             driver: json-file
@@ -21,6 +23,8 @@ services:
     wordpress:
         image: wordpress:4.9.1-php7.1-fpm-alpine
         hostname: php
+        privileged: true
+        restart: always
         networks:
             wordpress:
                 aliases:
@@ -28,11 +32,11 @@ services:
         environment:
             - WORDPRESS_DB_HOST=mysql
             - WORDPRESS_DB_USER=root
-            - WORDPRESS_DB_PASSWORD=root
-            - WORDPRESS_DB_NAME=xbclub
+            - WORDPRESS_DB_PASSWORD=hstackcms2018.com
+            - WORDPRESS_DB_NAME=db_hstackcms
             - WORDPRESS_TABLE_PREFIX=wp_
         volumes:
-            - ./www:/var/www/html:rw
+            - ./volumedata/www:/var/www/html:rw
             - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini:ro
             - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
         logging:
@@ -41,18 +45,23 @@ services:
                 max-file: '3'
                 max-size: 100m
     mysql:
-        image: mysql:5.7.19
+        image: mysql_v1
+        build:
+            context: .
+            dockerfile: Dockerfile.mysql
         hostname: mysql
+        privileged: true
+        restart: always
         ports:
-            - 13306:3306/tcp
+            - 3306:3306/tcp
         networks:
             wordpress:
                 aliases:
                     - mysql
         environment:
-            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_ROOT_PASSWORD=hstackcms2018.com
         volumes:
-            - ./mysql:/var/lib/mysql
+            - ./volumedata/mysql:/var/lib/mysql
             - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
         logging:
             driver: json-file
@@ -62,12 +71,14 @@ services:
     redis:
         image: redis:4.0.6
         hostname: redis
+        privileged: true
+        restart: always
         networks:
             wordpress:
                 aliases:
                     - redis
         volumes:
-            - ./redis:/data:rw
+            - ./volumedata/redis:/data:rw
             - /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
         logging:
             driver: json-file
@@ -76,4 +87,4 @@ services:
                 max-size: 100m
 networks:
     wordpress:
-        external: true
+#        external: true
