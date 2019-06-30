@@ -1,0 +1,27 @@
+version: '3'
+services:
+  cloud-demo:
+    container_name: cloud-demo
+    hostname: cloud-demo
+    image: cloud-demo
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - hope-cloud
+    environment:
+      TZ: 'Asia/Shanghai'
+    logging:
+      driver: json-file
+      options:
+        max-file: '3'
+        max-size: 100m
+
+# 该网络依赖于Cloud组件项目
+networks:
+  hope-cloud:
+    external: true
+
