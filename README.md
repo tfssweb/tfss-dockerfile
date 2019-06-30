@@ -1,7 +1,7 @@
 <h1 align="center"><a href="https://github.com/tfssweb" target="_blank">tfss-dockerfile</a></h1>
 
 <p align="center">
-<a href="https://tfssweb.github.io/"><img alt="Author" src="https://img.shields.io/badge/author-%E9%A2%93%E5%BA%9F%E4%B9%A6%E7%94%9F-blue.svg"/></a><a href="https://github.com/tfssweb/tfss-dockerfile"><img alt="star" src="https://img.shields.io/github/stars/tfssweb/tfss-dockerfile.svg?label=Stars&style=social"/></a><a href="https://github.com/tfssweb/tfss-dockerfile"><img alt="star" src="https://img.shields.io/github/forks/tfssweb/tfss-dockerfile.svg?label=Stars&style=social"/></a>
+<a href="https://tfssweb.github.io/"><img alt="Author" src="https://img.shields.io/badge/author-%E9%A2%93%E5%BA%9F%E4%B9%A6%E7%94%9F-blue.svg"/></a><a href="https://github.com/tfssweb/tfss-dockerfile"><img alt="star" src="https://img.shields.io/github/stars/tfssweb/tfss-dockerfile.svg?label=Stars&style=social"/></a><a href="https://github.com/tfssweb/tfss-dockerfile"><img alt="star" src="https://img.shields.io/github/forks/tfssweb/tfss-dockerfile.svg?label=Forks&style=social"/></a>
 
 </p>
 
