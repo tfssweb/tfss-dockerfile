@@ -1,0 +1,58 @@
+version: "3"
+services:
+  zabbix_db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_USER_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+    command: [mysqld, --character-set-server=utf8, --collation-server=utf8_bin]
+
+  zabbix_java-gateway:
+    image: zabbix/zabbix-java-gateway:latest
+
+  zabbix_server:
+    image: zabbix/zabbix-server-mysql:${OS}-${VERSION}-latest
+    environment:
+      - DB_SERVER_HOST=zabbix_db
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_USER_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - ZBX_JAVAGATEWAY=${ZBX_JAVAGATEWAY}
+      - ZBX_DEBUGLEVEL=${LOG_LEVEL}
+    volumes:
+      - ./zbx_env/usr/lib/zabbix/alertscripts:/usr/lib/zabbix/alertscripts:ro
+      - ./zbx_env/usr/lib/zabbix/externalscripts:/usr/lib/zabbix/externalscripts:ro
+    ports:
+      - "10051:10051"
+    links:
+      - zabbix_db
+      - zabbix_java-gateway
+
+  zabbix_web:
+    image: zabbix/zabbix-web-apache-mysql:${OS}-${VERSION}-latest
+    environment:
+      - ZBX_SERVER_HOST=zabbix_server
+      - DB_SERVER_HOST=zabbix_db
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_USER_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - PHP_TZ=${TIME_ZONE}
+    ports:
+      - ${HTTP_PORT}:80
+    links:
+      - zabbix_server
+      - zabbix_db
+
+  zabbix_agent:
+    image: zabbix/zabbix-agent:${OS}-${VERSION}-latest
+    privileged: true
+    environment:
+      - ZBX_SERVER_HOST=zabbix_server
+    expose:
+      - "10050"
+    links:
+      - zabbix_server
