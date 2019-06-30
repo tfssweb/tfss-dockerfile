@@ -1,0 +1,25 @@
+version: '3'
+services:
+  cloud-demo:
+    container_name: cloud-demo
+    image: cloud-demo
+    privileged: true
+    build:
+        context: .
+        dockerfile: Dockerfile
+    ports:
+        - "8066:80"
+    networks:
+        hope-cloud:
+            aliases:
+              - cloud-demo
+    environment:
+        TZ: 'Asia/Shanghai'
+    logging:
+        driver: json-file
+        options:
+            max-file: '3'
+            max-size: 100m
+networks:
+  hope-cloud:
+    external: true
